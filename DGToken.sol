@@ -19,8 +19,8 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
         _mint(to, amount);
     }
 
-    function transferTokens(address _receiver, uint amount) external {
-        require(balanceOf(msg.sender) >= amount, "Insufficient balance");
+    function transferNFTTokens(address _receiver, uint amount) external {
+        require(balanceOf(msg.sender) >= amount, "Balance is Insufficient");
         approve(msg.sender, amount);
         transferFrom(msg.sender, _receiver, amount);
     }
@@ -29,40 +29,40 @@ contract DegenToken is ERC20, Ownable, ERC20Burnable {
         return balanceOf(msg.sender);
     }
 
-    function burnTokens(uint amount) external {
-        require(balanceOf(msg.sender) >= amount, "Insufficient balance");
+    function burnNFTTokens(uint amount) external {
+        require(balanceOf(msg.sender) >= amount, "Balance is Insufficient");
         _burn(msg.sender, amount);
     }
 
     function gameStore() public pure returns (string memory) {
-        return "1. T-shirt NFT value = 200 \n2. Boots value = 100 \n3. Hat value = 75";
+        return "1. onaldo Signed Jersey NFT value = 250 \n2. Messi Autograph value = 150 \n3. Selfie with Neymar value = 125";
     }
 
-    function redeemTokens(uint choice) external {
-        require(choice >= 1 && choice <= 3, "Invalid selection");
+    function redeemNFTTokens(uint choice) external {
+        require(choice >= 1 && choice <= 3, "Selection is invalid please select between 1 and 3");
 
         string memory item;
         uint cost;
 
         if (choice == 1) {
-            item = "T-shirt NFT";
-            cost = 200;
+            item = "Ronaldo Signed Jersey";
+            cost = 250;
         } else if (choice == 2) {
-            item = "Boots";
-            cost = 100;
+            item = "Messi Autograph";
+            cost = 150;
         } else if (choice == 3) {
-            item = "Hat";
-            cost = 75;
+            item = "Selfie with Neymar";
+            cost = 125;
         }
 
-        require(balanceOf(msg.sender) >= cost, "Insufficient balance");
+        require(balanceOf(msg.sender) >= cost, "Balance is Insufficient");
 
         _burn(msg.sender, cost);
         redeemedItems[msg.sender].push(item);
         emit ItemRedeemed(msg.sender, item);
     }
 
-    function getRedeemedItems() external view returns (string[] memory) {
+    function getRedeemedNFT() external view returns (string[] memory) {
         return redeemedItems[msg.sender];
     }
 }
